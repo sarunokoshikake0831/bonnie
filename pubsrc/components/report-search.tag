@@ -198,7 +198,9 @@ const constants = require('./constants.json')
   </form>
 
   <div class="div__search-result" if={ search_result != null }>
-    <search-result flipper={ show_toc } reports={ search_result } />
+    <search-result flipper={ show_toc }
+                   reports={ search_result }
+                   token={ opts.token } />
   <div>
 
   <script>
