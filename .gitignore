@@ -37,6 +37,8 @@ jspm_packages
 .node_repl_history
 
 #
+public/js/index.js
 *.pem
 *.bak
+*.swp
 *~

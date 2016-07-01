@@ -9,16 +9,20 @@ const observable_report = require('./observable-report')
 
 <report>
   <style scoped>
-    hr { margin: 32px 0 32px 0 }
+    .h3__number:hover { cursor: pointer }
 
     .div__buttons {
       margin-top: 24px;
       text-align: right;
     }
+
+    hr { margin: 32px 0 32px 0 }
   </style>
 
   <div id={ 'report-number-' + opts.report.number }>
-    <h3 onclick={ opts.flipper }>No. { opts.report.number }</h3>
+    <h3 class="h3__number" onclick={ opts.flipper }>
+      No. { opts.report.number }
+    </h3>
 
     <report-common props={ state } />
 
