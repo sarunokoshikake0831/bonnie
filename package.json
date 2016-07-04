@@ -33,7 +33,7 @@
     "log4js": "^0.6.36",
     "moment": "^2.13.0",
     "mongodb": "^2.1.18",
-    "riot": "^2.4.1",
+    "riot": "^2.5.0",
     "riotify": "^1.0.1",
     "superagent": "^2.0.0",
     "vinyl-source-stream": "^1.1.0"

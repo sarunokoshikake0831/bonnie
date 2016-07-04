@@ -72,8 +72,8 @@ const observable_report = require('./observable-report')
     can_report() { return !this.is_reported && !this.is_changed }
 
     report_this() {
-        XHR.put(`/v1/report/${this.opts.report._id}`).set({
-            Authorization:          `Bearer: ${this.opts.token}`,
+        XHR.put(`/v1/reports/${this.opts.report._id}`).set({
+            Authorization:            `Bearer ${this.opts.token}`,
             'X-HTTP-Method-Override': 'PATCH'
         }).query({ version: this.version }).send({
             is_reported: true
@@ -93,6 +93,7 @@ const observable_report = require('./observable-report')
     }
 
     this.state.on(update_event, () => {
+        this.opts.token
         this.is_changed = true
         this.update()
     })
@@ -103,8 +104,8 @@ const observable_report = require('./observable-report')
   <h6>{ opts.reports.length } 件がヒットしました。</h6>
   <hr />
 
-  <report flipper={ opts.flipper }
-          token={ opts.token }
-          each={ report in opts.reports }
-          report={ report } />
+  <report each={ report in opts.reports }
+          flipper={ parent.opts.flipper }
+          report={ report }
+          token={ parent.opts.token } />
 </search-result>

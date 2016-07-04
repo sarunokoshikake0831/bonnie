@@ -45,6 +45,7 @@ const handlers = {
         oauth2:   require('./v1/oauth2'),
         register: require('./v1/register'),
         search:   require('./v1/search'),
+        update:   require('./v1/update'),
     },
 }
 
@@ -58,6 +59,8 @@ app.post('/:ver/oauth2/token', route('oauth2') );
 app.post('/:ver/reports',      route('register') );
 
 app.get('/:ver/reports', route('search') );
+
+app.put('/:ver/reports/:id', route('update') );
 
 https.createServer({
     key:  fs.readFileSync('local/certs/key.pem'),
