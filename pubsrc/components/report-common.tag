@@ -65,7 +65,7 @@ const constants = require('./constants.json')
                   id={ 'occurrence_hour-' + id_sfx }
                   onchange={ set_occurrence_time }>
             <option each={ hour in constants.hours }
-                    selected={ is_selected('occurrence_hour', hour) }
+                    selected={ parent.is_selected('occurrence_hour', hour) }
                     value={ hour }>
               { hour }
             </option>
@@ -75,7 +75,7 @@ const constants = require('./constants.json')
                   id={ 'occurrence_min-' + id_sfx }
                   onchange={ set_occurrence_time }>
             <option each={ min in constants.mins }
-                    selected={ is_selected('occurrence_min', min) }
+                    selected={ parent.is_selected('occurrence_min', min) }
                     value={ min }>
               { min }
             </option>
@@ -85,7 +85,7 @@ const constants = require('./constants.json')
                   id={ 'occurrence_floor-' + id_sfx }
                   onchange={ set_state('occurrence_floor') }>
             <option each={ floor in constants.floors }
-                    selected={ is_selected('occurrence_floor', floor) }
+                    selected={ parent.is_selected('occurrence_floor', floor) }
                     value={ floor }>
               { floor }
             </option>
@@ -95,7 +95,7 @@ const constants = require('./constants.json')
                   id={ 'occurrence_room-' + id_sfx }
                   onchange={ set_state('occurrence_room') }>
             <option each={ room in constants.rooms }
-                    selected={ is_selected('occurrence_room', room) }
+                    selected={ parent.is_selected('occurrence_room', room) }
                     value={ room }>
               { room }
             </option>
@@ -112,7 +112,7 @@ const constants = require('./constants.json')
                   id={ 'reporter_type-' + id_sfx }
                   onchange={ set_state('reporter_type') }>
             <option each={ type in constants.reporter_types }
-                    selected={ is_selected('reporter_type', type) }
+                    selected={ parent.is_selected('reporter_type', type) }
                     value={ type }>
               { type }
             </option>
@@ -168,21 +168,22 @@ const constants = require('./constants.json')
 </overview>
 
 <event-select>
+  <style scoped>
+    ul { list-style-type: none }
+  </style>
+
   <div class="row">
     <div class="col s12">
       <div class="card-panel">
         <ul>
-          <li each={ e, i in opts.events }
-              event={ opts.event }
-              setter={ set_state }
-              props={ opts.props }>
-            <input checked={ opts.props[opts.event] == e.id? "checked": null }
-                   id={ opts.event + '-' + i.toString() + '-' + id_sfx }
-                   name={ opts.event + '-' + id_sfx }
-                   onchange={ opts.setter }
+          <li each={ e, i in opts.events }>
+            <input checked={ parent.is_checked(e.id) }
+                   id={ parent.get_id(i) }
+                   name={ parent.group_name }
+                   onchange={ parent.set_state }
                    type="radio"
                    value={ e.id } />
-            <label for={ opts.event + '-' + i.toString() + '-' + id_sfx }>
+            <label for={ parent.get_id(i) }>
               { e.desc }
             </label>
           </li>
@@ -191,14 +192,21 @@ const constants = require('./constants.json')
     </div>
   </div>
 
-  <style scoped>
-    ul { list-style-type: none }
-  </style>
-
   <script>
-    this.id_sfx = Math.random().toString(36).slice(-8)
+    const id_sfx    = Math.random().toString(36).slice(-8)
+    this.group_name = this.opts.event + '-' + id_sfx
 
-    set_state(e) { this.opts.props.set_state(this.opts.event)(e.target.value) }
+    set_state(e) {
+        this.opts.props.set_state(this.opts.event)(e.target.value)
+    }
+
+    is_checked(id) {
+        return this.opts.props[this.opts.event] == id? "checked": null
+    }
+
+    get_id(i) {
+        return this.opts.event + '-' + i.toString() + '-' + id_sfx
+    }
   </script>
 </event-select>
 

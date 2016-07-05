@@ -93,7 +93,7 @@ function add_incident_condition(req, orig) {
 
     Object.keys(req.query.event0).forEach(key => {
         if (req.query.event0[key] === 'true') {
-            condition_event0.push({ event0: parseInt(key) });
+            condition_event0.push({ event0: key });
         }
     });
 
@@ -105,7 +105,7 @@ function add_incident_condition(req, orig) {
 
     Object.keys(req.query.event1).forEach(key => {
         if (req.query.event1[key] === 'true') {
-            condition_event1.push({ event1: parseInt(key) });
+            condition_event1.push({ event1: key });
         }
     });
 

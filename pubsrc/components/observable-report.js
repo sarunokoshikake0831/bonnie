@@ -44,14 +44,14 @@ module.exports = class {
 
         this.occurrence_date  = moment().format('YYYY/MM/DD')
         this.occurrence_time  = `${constants.hours[0]}:${constants.mins[0]}`
-        this.occurrence_floor = constants.floors[0]
+        this.occurrence_floor = constants.floors[0].toString()
         this.occurrence_room  = constants.rooms[0]
     
         this.report_date   = moment().format('YYYY/MM/DD')
         this.reporter_type = constants.reporter_types[0]
     
-        this.event0 = 0
-        this.event1 = 0
+        this.event0 = '0'
+        this.event1 = '0'
     
         this.detail         = ''
         this.cause          = ''

@@ -115,15 +115,12 @@ const constants = require('./constants.json')
   <h5>事象内容 { opts.eventid }</h5>
   <div class="div__this card-panel">
     <ul>
-      <li condition={ opts.condition }
-          each={ e in opts.events } 
-          pfx={ pfx }
-          setter={ opts.setter }>
-        <input checked={ opts.condition[opts.pfx][e.id] }
-               id={ 'filter-' + opts.pfx + '-' + e.id }
-               onclick={ opts.setter(opts.pfx, e.id) }
+      <li each={ e in opts.events }>
+        <input checked={ parent.opts.condition[parent.pfx][e.id] }
+               id={ 'filter-' + parent.pfx + '-' + e.id }
+               onclick={ parent.opts.setter(parent.pfx, e.id) }
                type="checkbox" />
-        <label for={ 'filter-' + opts.pfx + '-' + e.id }>
+        <label for={ 'filter-' + parent.pfx + '-' + e.id }>
           { e.desc }
         </label>
       </li>
