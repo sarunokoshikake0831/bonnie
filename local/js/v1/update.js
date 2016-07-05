@@ -1,7 +1,8 @@
 'use strict';
 
-const log4js = require('log4js');
-const util   = require('../util');
+const ObjectID = require('mongodb').ObjectID;
+const log4js   = require('log4js');
+const util     = require('../util');
 
 const log_info = log4js.getLogger('info');
 const log_warn = log4js.getLogger('warning');
@@ -16,11 +17,54 @@ module.exports = (req, res) => {
     }
 
     util.query( (db) => {
-        const msg_pfx = '[v1/update] '
-        let   report  = req.body;
+        const report_id = req.params.id;
+        const msg_pfx   = '[v1/update]'
 
-        let   report_id = req.params.id;
+        const method_override = req.get('X-HTTP-Method-Override');
 
-        console.log(`report_id = ${reporet_id}`);
+        if (method_override == null || method_override === 'PATCH') {
+            let data = { version: req.body.version + 1 };
+
+            Object.keys(req.body).forEach( key => {
+                if (key != 'version') {
+                    data[key] = req.body[key]
+                }
+            });
+
+            db.collection('reports').findOneAndUpdate(
+                {
+                    _id:     new ObjectID(report_id),
+                    version: req.body.version
+                },
+                { '$set': data }
+            ).then( result => {
+                db.close();
+
+                if (result.value == null) {
+                    res.sendStatus(409);
+
+                    const msg = msg_pfx +
+                                ` supressed to update report: ${report_id},` +
+                                ' because already updated.';
+
+                    log_info.inf(msg);
+                } else {
+                    res.sendStatus(200);
+                    log_info.info(`${msg_pfx} report updated: ${report_id}`);
+                }
+            }).catch( err => {
+                db.close();
+
+                res.sendStatus(500);
+                log_warn.warn(err);
+
+                const msg = `${msg_pfx} failed to access "reports" collection`;
+
+                log_warn.warn(msg);
+            });
+        } else {
+            res.sendStatus(400);
+            log_warn.warn(`${msg_pfx} bad request.}`);
+        }
     });
 };

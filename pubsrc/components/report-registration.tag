@@ -52,8 +52,10 @@ const observable_report = require('./observable-report')
             } else if (res.ok) {
                 alert(`No.${res.body.number} で登録しました。`)
                 this.reset()
-            } else {
+            } else if (res) {
                 alert(`原因不明のエラーが発生しました: ${res.status}`)
+            } else {
+                alert('原因不明のエラーが発生しました。')
             }
         })
     }

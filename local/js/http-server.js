@@ -46,6 +46,7 @@ const handlers = {
         register: require('./v1/register'),
         search:   require('./v1/search'),
         update:   require('./v1/update'),
+        delete:   require('./v1/delete')
     },
 }
 
@@ -58,9 +59,10 @@ function route(name) {
 app.post('/:ver/oauth2/token', route('oauth2') );
 app.post('/:ver/reports',      route('register') );
 
-app.get('/:ver/reports', route('search') );
-
+app.get('/:ver/reports',     route('search') );
 app.put('/:ver/reports/:id', route('update') );
+
+app.delete('/:ver/reports/:id', route('delete') );
 
 https.createServer({
     key:  fs.readFileSync('local/certs/key.pem'),

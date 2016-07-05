@@ -195,7 +195,8 @@ const constants = require('./constants.json')
   </form>
 
   <div class="div__search-result" if={ search_result != null }>
-    <search-result flipper={ show_toc }
+    <search-result del={ delete_report }
+                   flip={ show_toc }
                    reports={ search_result }
                    token={ opts.token } />
   <div>
@@ -252,8 +253,10 @@ const constants = require('./constants.json')
                 Materialize.updateTextFields()
                 $('select').material_select('destroy')
                 $('select').material_select()
-            } else {
+            } else if (res) {
                 alert(`原因不明のエラーが発生しました: ${res.status}`)
+            } else {
+                alert('原因不明のエラーが発生しました。')
             }
         })
     }
@@ -295,6 +298,13 @@ const constants = require('./constants.json')
         })
 
         this.update()
+    }
+
+    delete_report(index) {
+        return () => {
+            this.search_result.splice(index, 1)
+            this.update()
+        }
     }
 
     show_toc() { $('.button-collapse').sideNav('show') }

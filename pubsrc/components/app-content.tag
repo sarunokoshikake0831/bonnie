@@ -66,8 +66,10 @@ const XHR = require('superagent')
                 this.access_token = res.body.access_token
                 this.update()
                 $('ul.tabs').tabs()
-            } else {
+            } else if (res) {
                 alert(`原因不明のエラーが発生しました: ${res.status}`)
+            } else {
+                alert('原因不明のエラーが発生しました。')
             }
         })
     }
