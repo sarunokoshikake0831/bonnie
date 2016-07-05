@@ -31,6 +31,13 @@ module.exports = (req, res) => {
                 }
             });
 
+
+            /*
+             * バージョン番号が一致しないレポートは更新しない。
+             * つまり、先に誰かが更新してしまったレポートを更新することは
+             * できない。
+             * 当然、既に消去されてしまったレポートも更新できない。
+             */
             db.collection('reports').findOneAndUpdate(
                 {
                     _id:     new ObjectID(report_id),

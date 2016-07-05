@@ -26,11 +26,11 @@ module.exports = (req, res) => {
         db.collection('etc').findOneAndUpdate(
             { purpose: 'number management' },
             { '$inc': { number: 1 } }
-        ).then( (result) => {
+        ).then(result => {
             report.number  = result.value.number.toString();
             report.version = 0;
             return db.collection('reports').insertOne(report);
-        }).then( (result) => {
+        }).then(result => {
             db.close();
             res.status(201).send({ number: report.number });
 

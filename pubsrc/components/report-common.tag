@@ -7,6 +7,11 @@ require('./custom-textarea.tag')
 
 const constants = require('./constants.json')
 
+
+/*
+ * レポートの内容を表示するためのタグ。
+ * 登録と検索の両方で利用する。
+ */
 <overview>
   <style scoped>
     :scope {

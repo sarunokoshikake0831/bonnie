@@ -6,6 +6,12 @@ require('./search-result.tag')
 const XHR       = require('superagent')
 const constants = require('./constants.json')
 
+
+/*
+ * 検索タブで表示されるページのタグ。
+ * このタグで表示するのは検索条件のみ。
+ * 検索結果の表示は search-result タグが担う。
+ */
 <filter-number>
   <div class="row">
     <div class="input-field col s4">
@@ -307,8 +313,21 @@ const constants = require('./constants.json')
         }
     }
 
+
+    /*
+     * 検索結果の目次を表示するためのコード。
+     * 見ての通り、Materialize (jquery) を利用している。
+     * 検索結果のレポートの番号をクリックすると表示される。
+     */
     show_toc() { $('.button-collapse').sideNav('show') }
 
+
+    /*
+     * 検索結果の目次の大きさを指定している。
+     * これも Materialize。
+     * Materialize の見た目や使い勝手は良いんだけど、
+     * こうやって jquery を使わなきゃいけないところはとても残念。
+     */
     this.on('mount', () => {
         $('.button-collapse').sideNav({
             menuWidth:    768,

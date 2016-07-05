@@ -10,6 +10,9 @@ const log_warn = log4js.getLogger('warning');
 const log_crit = log4js.getLogger('ctitical');
 
 module.exports = {
+    /*
+     * DB への接続
+     */
     query(callback) {
         let result;
 
@@ -23,6 +26,11 @@ module.exports = {
         });
     },
 
+
+    /*
+     * セッションが認証されているかをテストして、
+     * 結果を HTTP のステータスコードで返す。
+     */
     is_authorized(req) {
         const header_authorization = req.get('Authorization');
 
@@ -37,32 +45,5 @@ module.exports = {
         }
 
         return 200;
-    },
-
-    uniq(array, eq) {
-        function exists(x, a) {
-            return a.filter( (y) => eq(x, y) ).length != 0;
-        }
-                                                                 
-        function iter(rest, ans) {
-            if (rest.length < 1) {
-                return ans;
-            } else {   
-                const car = rest[0];
-                const cdr = rest.slice(1);
-
-                if (exists(car, ans) ) {
-                    return iter(cdr, ans);
-                } else {         
-                    return iter(cdr, ans.concat(car) );
-                }
-            }
-        }
-
-        if (array.length < 2) {
-            return array;
-        } else {                           
-            return iter(array.slice(1), array.slice(0, 1) );
-        }
-    },
+    }
 };

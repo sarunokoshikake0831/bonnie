@@ -63,12 +63,12 @@ const observable_report = require('./observable-report')
     reset() {
         this.state.reset()
         this.update()
-        Materialize.updateTextFields()
 
 
         /*
-         * ここから不可解な動作の対策コード
+         * Materialize 用のコード (jquery 含む)
          */
+        Materialize.updateTextFields()
         $('select').material_select('destroy')
         $('select').material_select()
         /*

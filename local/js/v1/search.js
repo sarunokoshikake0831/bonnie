@@ -7,6 +7,10 @@ const log_info = log4js.getLogger('info');
 const log_warn = log4js.getLogger('warning');
 const log_crit = log4js.getLogger('critical');
 
+
+/*
+ * インシデントとトラブル共通の検索条件
+ */
 function generate_common_condition(req) {
     let condition = [];
 
@@ -84,6 +88,12 @@ function generate_common_condition(req) {
     return condition;
 }
 
+
+/*
+ * 共通の検索条件に、インシデント固有の条件を追加する。
+ * 既存のオブジェクトに追加するのではなく、
+ * 新たにオブジェクトを作成して返す (つまり共有の検索条件は変更されない)。
+ */
 function add_incident_condition(req, orig) {
     let condition = [];
 
@@ -130,7 +140,12 @@ module.exports = (req, res) => {
 
 
         /*
-         * レポート種別
+         * インシデントには事象内容 1/2 があるが、トラブルには無い。
+         * この違いを手軽に吸収するために、それぞれで独立の検索条件を作成
+         * することにした。
+         * 両レポートが検索対象の場合、それぞれの検索条件を or で繋げば
+         * いっちょあがり。
+         * 実に安直。
          */
         const type = req.query.type;
 

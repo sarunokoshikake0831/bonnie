@@ -4,6 +4,12 @@ const riot      = require('riot')
 const moment    = require('moment')
 const constants = require('./constants.json')
 
+
+/*
+ * レポートの状態保持に Riot の Observalbe を利用してみた。
+ * set_state() とか reset() で状態を更新すると、update_event が飛ぶ。
+ * シンプルだけどかなり使える。
+ */
 const report_attributes = [
     'report_type',
     'title',

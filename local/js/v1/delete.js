@@ -20,6 +20,12 @@ module.exports = (req, res) => {
         const report_id = req.params.id;
         const msg_pfx   = '[v1/delete]'
 
+
+        /*
+         * バージョン番号が一致しないレポートは削除しない。
+         * つまり、先に誰かが更新しまったレポートは削除できない。
+         * もちろん、既に消去されてしまったレポートも削除できない。
+         */
         db.collection('reports').findOneAndDelete(
             {
                 _id:     new ObjectID(report_id),

@@ -65,7 +65,7 @@ const XHR = require('superagent')
             } else if (res.ok) {
                 this.access_token = res.body.access_token
                 this.update()
-                $('ul.tabs').tabs()
+                $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
             } else if (res) {
                 alert(`原因不明のエラーが発生しました: ${res.status}`)
             } else {
@@ -75,6 +75,11 @@ const XHR = require('superagent')
     }
 
     logout() {
+        /*
+         * この tag は事実上 DOM の最上位に位置するため、
+         * 自身を unmount すれば、中身をきれいさっぱり掃除することができる。
+         * とてもお手軽。
+         */
         this.access_token = null
         this.unmount(true)
         riot.mount('app-content')

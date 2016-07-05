@@ -40,6 +40,10 @@ app.use(express.static('public') );
 app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({ extended: true }) );
 
+
+/*
+ * API をバージョンで振り分けるための工夫
+ */
 const handlers = {
     v1: {
         oauth2:   require('./v1/oauth2'),
