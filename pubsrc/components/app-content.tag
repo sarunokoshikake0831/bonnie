@@ -36,7 +36,7 @@ const XHR = require('superagent')
             <report-registration token={ access_token } />
           </div>
           <div id="search" class="col s12">
-            <report-search token={ access_token } />
+            <report-search token={ access_token } user={ user } />
           </div>
         </div>
       </div>
@@ -64,6 +64,7 @@ const XHR = require('superagent')
                 alert('サーバとの通信に失敗しました。');
             } else if (res.ok) {
                 this.access_token = res.body.access_token
+                this.user         = res.body.user
                 this.update()
                 $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
             } else if (res) {
@@ -81,6 +82,7 @@ const XHR = require('superagent')
          * とてもお手軽。
          */
         this.access_token = null
+        this.user         = null
         this.unmount(true)
         riot.mount('app-content')
     }

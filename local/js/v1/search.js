@@ -20,6 +20,8 @@ function generate_common_condition(req) {
      */
     if (req.session.user.authority === 'restricted') {
         condition.push({ author: req.session.user.account });
+    } else if (req.query.author != '') {
+        condition.push({ author: new RegExp(req.query.author) });
     }
 
 

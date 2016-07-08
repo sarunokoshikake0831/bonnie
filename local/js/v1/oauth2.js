@@ -53,7 +53,13 @@ module.exports = (req, res) => {
                 req.session.user         = user;
                 req.session.access_token = access_token;
 
-                res.json({ access_token: access_token });
+                res.json({
+                    access_token: access_token,
+                    user: {
+                        account:   user.account,
+                        authority: user.authority
+                    }
+                });
                 log_info.info(`${account} logged in.`);
             } else {
                 res.sendStatus(401);

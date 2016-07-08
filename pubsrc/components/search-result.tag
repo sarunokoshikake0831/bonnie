@@ -26,7 +26,9 @@ const observable_report = require('./observable-report')
       <span class="span__number" onclick={ opts.flip }>
         No. { opts.report.number }
       </span>
-      <span class="span__status">({ get_status_name() })</span>
+      <span class="span__status">
+        ({ opts.report.author }、{ get_status_name() })
+      </span>
     </div>
 
     <report-common props={ state } />

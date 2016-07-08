@@ -12,15 +12,24 @@ const constants = require('./constants.json')
  * このタグで表示するのは検索条件のみ。
  * 検索結果の表示は search-result タグが担う。
  */
+
+<filter-author>
+  <div class="input-field col s4">
+    <input id="filter-author"
+           onchange={ opts.setter }
+           type="text"
+           value={ opts.condition.author } />
+    <label for="filter-author">起案者</label>
+  </div>
+</filter-author>
+
 <filter-number>
-  <div class="row">
-    <div class="input-field col s4">
-      <input id="filter-number"
-             onchange={ opts.setter }
-             type="text"
-             value={ opts.condition.number } />
-      <label for="filter-number">レポート番号</label>
-    </div>
+  <div class="input-field col s4">
+    <input id="filter-number"
+           onchange={ opts.setter }
+           type="text"
+           value={ opts.condition.number } />
+    <label for="filter-number">レポート番号</label>
   </div>
 </filter-number>
 
@@ -171,7 +180,12 @@ const constants = require('./constants.json')
   <a href="#" data-activates="slide-out" class="button-collapse"></a>
 
   <form action="#" id="search-condition">
-    <filter-number condition={ search_condition } setter={ set('number') } />
+    <div class="row">
+      <filter-author if={ opts.user.authority == 'privileged' }
+                     condition={ search_condition }
+                     setter={ set('author') } />
+      <filter-number condition={ search_condition } setter={ set('number') } />
+    </div>
     <filter-period condition={ search_condition } setter={ set_date } />
     <filter-type   condition={ search_condition } setter={ toggle } />
     <filter-state  condition={ search_condition } setter={ toggle } />
@@ -271,6 +285,7 @@ const constants = require('./constants.json')
         this.search_result = null
 
         this.search_condition = {
+            author: '',
             number: '',
 
             date: {
