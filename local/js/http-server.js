@@ -63,8 +63,9 @@ function route(name) {
 app.post('/:ver/oauth2/token', route('oauth2') );
 app.post('/:ver/reports',      route('register') );
 
-app.get('/:ver/reports',     route('search') );
-app.put('/:ver/reports/:id', route('update') );
+app.get('/:ver/reports',                 route('search') );
+app.put('/:ver/reports/:id',             route('update') );
+app.put('/:ver/users/:account/password', route('password') );
 
 app.delete('/:ver/reports/:id', route('delete') );
 

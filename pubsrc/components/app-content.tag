@@ -16,9 +16,7 @@ const XHR = require('superagent')
   </style>
 
   <div class={ access_token? "div__logged_in": "div__logged_out" }>
-    <div class="navbar-fixed">
-      <app-header logout={ logout } />
-    </div>
+    <app-header logout={ logout } />
 
     <main>
       <div class="container">

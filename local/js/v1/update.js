@@ -44,7 +44,7 @@ module.exports = (req, res) => {
                     version: req.body.version
                 },
                 { '$set': data }
-            ).then( result => {
+            ).then(result => {
                 db.close();
 
                 if (result.value == null) {
@@ -59,7 +59,7 @@ module.exports = (req, res) => {
                     res.sendStatus(200);
                     log_info.info(`${msg_pfx} report updated: ${report_id}`);
                 }
-            }).catch( err => {
+            }).catch(err => {
                 db.close();
 
                 res.sendStatus(500);
