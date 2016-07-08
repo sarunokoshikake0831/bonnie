@@ -42,16 +42,23 @@ uglify が対応してくれたら、リリースバージョンのビルドに�
 
     % su -u mongodb mongod --config /etc/mongodb.conf
 
-ユーザを登録しないと使えない。
-近日中にユーザを登録するスクリプトを作成予定 (つまり、そのスクリプトができるまで使えない ...)。
+##### 4. DB の初期化
 
+    % mongo localhost/bonnie --quiet local/utils/initdb.js
 
-##### 4. SSL のオレオレ証明書と秘密鍵を作成 (質問に何と答えるかは、スクリプト内のコメント参照)
+##### 5. SSL のオレオレ証明書と秘密鍵を作成 (質問に何と答えるかは、スクリプト内のコメント参照)
 
     % cd local/certs
     % sh ../utils/gen-dummy-certs.sh
 
-##### 5. HTTP サーバを起動
+##### 6. HTTP サーバを起動
 
     % cd ../..
     % sudo npm run http-server
+
+##### 7. ユーザアカウントの作成
+
+    % node local/utils/adduser.js -[rp] <account> <password>
+
+-r は一般ユーザ、-p は特権ユーザを作成する。
+
