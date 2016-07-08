@@ -15,11 +15,11 @@ module.exports = (req, res) => {
         return;
     }
 
-    util.query( (db) => {
+    util.query(db => {
         const msg_pfx = '[v1/register] '
         let   report  = req.body;
 
-        report.author      = req.session.user.username;
+        report.author      = req.session.user.account;
         report.is_reported = false;
         report.is_dirty    = false;
 
@@ -34,7 +34,7 @@ module.exports = (req, res) => {
             db.close();
             res.status(201).send({ number: report.number });
 
-            const msg = `registered report by ${req.session.user.username}.`;
+            const msg = `registered report by ${req.session.user.account}.`;
             log_info.info(`${msg_pfx} ${msg}`);
         }).catch(err => {
             db.close();

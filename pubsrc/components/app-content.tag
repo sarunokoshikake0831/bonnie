@@ -53,7 +53,7 @@ const XHR = require('superagent')
     login(account, password) {
         XHR.post('/v1/oauth2/token').type('form').send({
             grant_type: 'password',
-            username:   account,
+            account:    account,
             password:   password
         }).end( (err, res) => {
             if (err && res && res.status == 401) {

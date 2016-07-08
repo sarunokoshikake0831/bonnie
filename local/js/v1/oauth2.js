@@ -37,13 +37,13 @@ function generate_token() {
 }
 
 module.exports = (req, res) => {
-    const username = req.body.username;
+    const account  = req.body.account;
     const password = req.body.password;
 
     util.query( (db) => {
         db.collection('users').find({
             is_alive: true,
-            username: username
+            account:  account
         }).limit(1).next().then(user => {
             db.close();
 
@@ -54,10 +54,10 @@ module.exports = (req, res) => {
                 req.session.access_token = access_token;
 
                 res.json({ access_token: access_token });
-                log_info.info(`${username} logged in.`);
+                log_info.info(`${account} logged in.`);
             } else {
                 res.sendStatus(401);
-                log_info.info(`${username} login failed.`);
+                log_info.info(`${account} login failed.`);
             }
         }).catch(err => {
             db.close();

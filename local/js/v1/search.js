@@ -19,7 +19,7 @@ function generate_common_condition(req) {
      * restricted なユーザは自分の報告したレポートのみ検索対象
      */
     if (req.session.user.authority === 'restricted') {
-        condition.push({ author: req.session.user.username });
+        condition.push({ author: req.session.user.account });
     }
 
 
