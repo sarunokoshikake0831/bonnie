@@ -69,6 +69,8 @@ app.put('/:ver/users/:account/password', route('password') );
 
 app.delete('/:ver/reports/:id', route('delete') );
 
+app.all('*', (req, res) => { res.sendStatus(403) });
+
 https.createServer({
     key:  fs.readFileSync('local/certs/key.pem'),
     cert: fs.readFileSync('local/certs/cert.pem')
