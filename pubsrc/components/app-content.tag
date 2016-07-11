@@ -40,7 +40,7 @@ const XHR = require('superagent')
       </div>
     </main>
 
-    <app-footer />
+    <app-footer logout={ logout } />
   </div>
 
   <login-form if={ !access_token } login={ login } />

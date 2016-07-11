@@ -8,7 +8,9 @@
           <h5 class="white-text">メニュー</h5>
           <ul>
             <li>
-              <a class="grey-text text-lighten-3" href="logout">
+              <a class="grey-text text-lighten-3"
+                 href="#"
+                 onclick={ opts.logout }>
                 ログアウト
               </a>
             </li>
