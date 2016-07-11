@@ -20,58 +20,51 @@ module.exports = (req, res) => {
         const report_id = req.params.id;
         const msg_pfx   = '[v1/update]'
 
-        const method_override = req.get('X-HTTP-Method-Override');
+        let data = { version: req.body.version + 1 };
 
-        if (method_override == null || method_override === 'PATCH') {
-            let data = { version: req.body.version + 1 };
-
-            Object.keys(req.body).forEach( key => {
-                if (key != 'version') {
-                    data[key] = req.body[key]
-                }
-            });
+        Object.keys(req.body).forEach( key => {
+            if (key != 'version') {
+                data[key] = req.body[key]
+            }
+        });
 
 
-            /*
-             * バージョン番号が一致しないレポートは更新しない。
-             * つまり、先に誰かが更新してしまったレポートを更新することは
-             * できない。
-             * 当然、既に消去されてしまったレポートも更新できない。
-             */
-            db.collection('reports').findOneAndUpdate(
-                {
-                    _id:     new ObjectID(report_id),
-                    version: req.body.version
-                },
-                { '$set': data }
-            ).then(result => {
-                db.close();
+        /*
+         * バージョン番号が一致しないレポートは更新しない。
+         * つまり、先に誰かが更新してしまったレポートを更新することは
+         * できない。
+         * 当然、既に消去されてしまったレポートも更新できない。
+         */
+        db.collection('reports').findOneAndUpdate(
+            {
+                _id:     new ObjectID(report_id),
+                version: req.body.version
+            },
+            { '$set': data }
+        ).then(result => {
+            db.close();
 
-                if (result.value == null) {
-                    res.sendStatus(409);
+            if (result.value == null) {
+                res.sendStatus(409);
 
-                    const msg = msg_pfx +
-                                ` supressed to update report: ${report_id},` +
-                                ' because already updated.';
+                const msg = msg_pfx +
+                            ` supressed to update report: ${report_id},` +
+                            ' because already updated.';
 
-                    log_info.inf(msg);
-                } else {
-                    res.sendStatus(200);
-                    log_info.info(`${msg_pfx} report updated: ${report_id}`);
-                }
-            }).catch(err => {
-                db.close();
+                log_info.inf(msg);
+            } else {
+                res.sendStatus(200);
+                log_info.info(`${msg_pfx} report updated: ${report_id}`);
+            }
+        }).catch(err => {
+            db.close();
 
-                res.sendStatus(500);
-                log_warn.warn(err);
+            res.sendStatus(500);
+            log_warn.warn(err);
 
-                const msg = `${msg_pfx} failed to access "reports" collection`;
+            const msg = `${msg_pfx} failed to access "reports" collection`;
 
-                log_warn.warn(msg);
-            });
-        } else {
-            res.sendStatus(400);
-            log_warn.warn(`${msg_pfx} bad request.}`);
-        }
+            log_warn.warn(msg);
+        });
     });
 };
