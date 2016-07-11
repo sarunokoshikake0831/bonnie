@@ -5,18 +5,19 @@ require('./app-footer.tag')
 require('./login-form.tag')
 require('./report-registration.tag')
 require('./report-search.tag')
+require('./change-password.tag')
 
 const XHR = require('superagent')
 
 <app-content>
   <style scoped>
-    main        { margin-top: 8px     }
-    h4, h5      { color:      #ef5350 }
-    .div__logged_out { opacity:    0.2     }
+    main         { margin-top: 8px     }
+    h4, h5       { color:      #ef5350 }
+    .div__fogged { opacity:    0.2     }
   </style>
 
-  <div class={ access_token? "div__logged_in": "div__logged_out" }>
-    <app-header logout={ logout } />
+  <div class={ tmp == null? "div__clear": "div__fogged" }>
+    <app-header />
 
     <main>
       <div class="container">
@@ -40,13 +41,19 @@ const XHR = require('superagent')
       </div>
     </main>
 
-    <app-footer logout={ logout } />
+    <app-footer />
   </div>
 
-  <login-form if={ !access_token } login={ login } />
+  <tmp></tmp>
 
   <script>
     this.access_token = null
+    this.tmp          = null
+
+    this.on('mount', () => {
+        this.tmp = riot.mount('tmp', 'login-form', { login: this.login })
+        this.update()
+    })
 
     login(account, password) {
         XHR.post('/v1/oauth2/token').type('form').send({
@@ -61,6 +68,8 @@ const XHR = require('superagent')
             } else if (err) {
                 alert('サーバとの通信に失敗しました。');
             } else if (res.ok) {
+                this.tmp[0].unmount(true)
+                this.tmp          = null
                 this.access_token = res.body.access_token
                 this.user         = res.body.user
                 this.update()
@@ -73,7 +82,38 @@ const XHR = require('superagent')
         })
     }
 
-    logout() {
+    change_password(old_password, new_password) {
+        XHR.put('/v1/users/' + this.user.account + '/password').set({
+            Authorization: `Bearer: ${this.access_token}`
+        }).send({
+            old_password: old_password,
+            new_password: new_password
+        }).end( (err, res) => {
+            if (err && res && res.status == 403) {
+                alert('古いパスワードが間違っています。')
+            } else if (err && res) {
+                alert('サーバでエラーが発生しました。')
+            } else if (err) {
+                alert('サーバとの通信に失敗しました。')
+            } else if (res.ok) {
+                alert('更新しました。')
+            } else if (res) {
+                alert(`原因不明のエラーが発生しました: ${res.status}`)
+            } else {
+                alert('原因不明のエラーが発生しました。')
+            }
+
+            this.tmp[0].unmount(true)
+            this.tmp = null
+            this.update()
+            $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
+            riot.route('/')
+        })
+    }
+
+    riot.route.base('/')
+
+    riot.route('logout', () => {
         /*
          * この tag は事実上 DOM の最上位に位置するため、
          * 自身を unmount すれば、中身をきれいさっぱり掃除することができる。
@@ -83,6 +123,18 @@ const XHR = require('superagent')
         this.user         = null
         this.unmount(true)
         riot.mount('app-content')
-    }
+        riot.route('/')
+    })
+
+    riot.route('change-password', () => {
+        this.tmp = riot.mount('tmp', 'change-password', {
+            change_password: this.change_password
+        })
+
+        riot.route('/')
+        this.update()
+    })
+
+    riot.route.start(true)
   </script>
 </app-content>

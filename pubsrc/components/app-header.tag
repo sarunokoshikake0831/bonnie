@@ -12,11 +12,11 @@
   <nav>
     <div class="container">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">
+        <a href="http://www.kdu.ac.jp" class="brand-logo">
           <img id="logo" src="img/KDU_logo_white-alpha.png" />
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="#" onclick={ opts.logout }>ログアウト</a></li>
+          <li><a href="/logout">ログアウト</a></li>
         </ul>
       </div>
     </div>

@@ -33,7 +33,7 @@
     this.on('mount', () => window.scrollTo(0, 0) )
 
     submit(e) {
-        opts.login(this.account.value, this.password.value)
+        this.opts.login(this.account.value, this.password.value)
         this.login.reset()
     }
   </script>

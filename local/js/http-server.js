@@ -46,11 +46,12 @@ app.use(bodyParser.urlencoded({ extended: true }) );
  */
 const handlers = {
     v1: {
-        oauth2:   require('./v1/oauth2'),
-        register: require('./v1/register'),
-        search:   require('./v1/search'),
-        update:   require('./v1/update'),
-        delete:   require('./v1/delete')
+        oauth2:          require('./v1/oauth2'),
+        register:        require('./v1/register'),
+        search:          require('./v1/search'),
+        update:          require('./v1/update'),
+        delete:          require('./v1/delete'),
+        change_password: require('./v1/change-password')
     },
 }
 
@@ -65,7 +66,7 @@ app.post('/:ver/reports',      route('register') );
 
 app.get('/:ver/reports',                 route('search') );
 app.put('/:ver/reports/:id',             route('update') );
-app.put('/:ver/users/:account/password', route('password') );
+app.put('/:ver/users/:account/password', route('change_password') );
 
 app.delete('/:ver/reports/:id', route('delete') );
 

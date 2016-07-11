@@ -8,14 +8,12 @@
           <h5 class="white-text">メニュー</h5>
           <ul>
             <li>
-              <a class="grey-text text-lighten-3"
-                 href="#"
-                 onclick={ opts.logout }>
+              <a class="grey-text text-lighten-3" href="/logout">
                 ログアウト
               </a>
             </li>
             <li>
-              <a class="grey-text text-lighten-3" href="change-password">
+              <a class="grey-text text-lighten-3" href="/change-password">
                 パスワードの変更
               </a>
             </li>

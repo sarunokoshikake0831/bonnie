@@ -77,7 +77,7 @@ const observable_report = require('./observable-report')
 
     report_this() {
         XHR.put(`/v1/reports/${this.opts.report._id}`).set({
-            Authorization:            `Bearer ${this.opts.token}`,
+            Authorization: `Bearer ${this.opts.token}`
         }).send({
             is_reported: true,
             is_dirty:    false,
