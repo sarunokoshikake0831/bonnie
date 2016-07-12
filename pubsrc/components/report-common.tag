@@ -235,24 +235,34 @@ const constants = require('./constants.json')
 
 <report-common>
   <overview props={ opts.props } />
+
   <event-select-0 if={ opts.props.report_type == 'incident' }
                   props={ opts.props } />
   <event-select-1 if={ opts.props.report_type == 'incident' }
                   props={ opts.props } />
-  <custom-textarea id="detail"
-                   label="事象詳細"
+
+  <custom-textarea label="事象詳細"
                    maxlength=512
-                   props={ opts.props } />
-  <custom-textarea id="cause"
-                   label="原因及び要因"
+                   setter={ opts.props.set_state('detail') }
+                   text={ opts.props.detail }>
+    { opts.text }
+  </custom-textarea>
+  <custom-textarea label="原因及び要因"
                    maxlength=256
-                   props={ opts.props } />
-  <custom-textarea id="consideration"
-                   label="検討事項"
+                   setter={ opts.props.set_state('cause') }
+                   text={ opts.props.cause }>
+    { opts.text }
+  </custom-textarea>
+  <custom-textarea label="検討事項"
                    maxlength=256
-                   props={ opts.props } />
-  <custom-textarea id="countermeasure"
-                   label="対策"
+                   setter={ opts.props.set_state('consideration') }
+                   text={ opts.props.consideration }>
+    { opts.text }
+  </custom-textarea>
+  <custom-textarea label="対策"
                    maxlength=256
-                   props={ opts.props } />
+                   setter={ opts.props.set_state('countermeasure') }
+                   text={ opts.props.countermeasure }>
+    { opts.text }
+  </custom-textarea>
 </report-common>

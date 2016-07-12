@@ -10,16 +10,12 @@
       <textarea class="materialize-textarea"
                 id={ id }
                 onchange={ set_state }
-                maxlength={ opts.maxlength }
-                rows={ opts.rows }>{ opts.props[opts.id] }</textarea>
+                maxlength={ opts.maxlength }><yield/></textarea>
       <label for={ id }>{ opts.label }</label>
   </div>
 
   <script>
     this.id = 'textarea-' + Math.random().toString(36).slice(-8)
-
-    set_state() {
-        this.opts.props.set_state(this.opts.id)(this[this.id].value)
-    }
+    set_state() { this.opts.setter(this[this.id].value) }
   </script>
 </custom-textarea>
