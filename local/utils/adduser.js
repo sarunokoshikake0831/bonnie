@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const bcrypt     = require('bcrypt');
-const util       = require('../js/util');
+const bcrypt = require('bcrypt');
+const util   = require('../js/util');
 
 function usage() {
     console.log('usage: adduser.js -[rp] account passpword');
