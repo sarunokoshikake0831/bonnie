@@ -28,7 +28,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "gulp": "^3.9.1",
-    "gulp-uglify": "^1.5.3",
+    "gulp-uglify": "^1.5.4",
     "https": "^1.0.0",
     "log4js": "^0.6.36",
     "moment": "^2.13.0",

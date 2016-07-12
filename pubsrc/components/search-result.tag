@@ -2,9 +2,7 @@
 
 require('./report-common.tag')
 
-const XHR = require('superagent')
-
-const constants         = require('./constants.json')
+const XHR               = require('superagent')
 const observable_report = require('./observable-report')
 
 <report>

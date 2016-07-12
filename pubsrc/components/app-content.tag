@@ -61,12 +61,12 @@ const XHR = require('superagent')
     this.tmp          = null
 
     this.on('mount', () => {
-        this.tmp = riot.mount('tmp', 'login-form', { login: this.login })
+        this.tmp = riot.mount('tmp', 'login-form', { login: this.login })[0]
         this.update()
     })
 
     unmount_tmp() {
-        this.tmp[0].unmount(true)
+        this.tmp.unmount(true)
         this.tmp = null
         this.update()
         $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
@@ -142,7 +142,7 @@ const XHR = require('superagent')
             cancel:          this.unmount_tmp,
             change_password: this.change_password,
             user:            this.user
-        })
+        })[0]
 
         riot.route('/')
         this.update()
