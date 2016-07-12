@@ -25,36 +25,39 @@
     % cd bonnie
 
 
-##### 2. クライアントのコンパイル (デバグ用バージョン)
+##### 2. クライアントのコンパイル
 
     % npm install
     % npm run build
 
-リリースバージョンを
+リリースバージョンは
 
     % npm run build-dist
 
-でコンパイルできようにしたかったのだが、uglify が ES2015 に対応していないため、現状は不可。
-uglify が対応してくれたら、リリースバージョンのビルドにも対応する予定。
+でコンパイルできる。
 
 
 ##### 3. MongoDB の起動
 
     % su -u mongodb mongod --config /etc/mongodb.conf
 
+
 ##### 4. DB の初期化
 
     % mongo localhost/bonnie --quiet local/utils/initdb.js
+
 
 ##### 5. SSL のオレオレ証明書と秘密鍵を作成 (質問に何と答えるかは、スクリプト内のコメント参照)
 
     % cd local/certs
     % sh ../utils/gen-dummy-certs.sh
 
+
 ##### 6. HTTP サーバを起動
 
     % cd ../..
     % sudo npm run http-server
+
 
 ##### 7. ユーザアカウントの作成
 
