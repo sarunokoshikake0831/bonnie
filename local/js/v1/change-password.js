@@ -27,7 +27,7 @@ module.exports = (req, res) => {
         db.collection('users').find({
             is_alive: true,
             account:  account
-        }).then(user => {
+        }).limit(1).next().then(user => {
             if (user != null && compareSync(old_password, user.hash) ) {
                 const hash = hashSync(new_password, genSaltSync() );
 

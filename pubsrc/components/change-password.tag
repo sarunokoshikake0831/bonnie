@@ -13,18 +13,21 @@
     }
 
     form  {
-      width:      256px;
+      width:      384px;
       margin-top: 128px;
       text-align: right;
     }
 
-    input { width: 192px }
+    input { width: 256px }
   </style>
 
   <form action="#" name="changepassword">
     <input type="password" name="old"  placeholder="旧パスワード" />
     <input type="password" name="new0" placeholder="新パスワード" />
     <input type="password" name="new1" placeholder="新パスワード (確認用)" />
+    <button class="waves-effect waves-light btn" onclick={ cancel }>
+      キャンセル
+    </button>
     <button class="waves-effect waves-light btn" onclick={ submit }>
       変更
     </button>
@@ -40,7 +43,7 @@
             is_facile = true
         }
 
-        if (passsword.match(/^\d+$/) ) {
+        if (password.match(/^\d+$/) ) {
             is_facile = true
         }
 
@@ -52,14 +55,16 @@
             is_facile = true
         }
 
-        if (password == this.user.account) {
+        if (password == this.opts.user.account) {
             is_facile = true
         }
 
         return !is_facile
     }
 
-    submit(e) {
+    cancel() { this.opts.cancel() }
+
+    submit() {
         const old  = this.old.value
         const new0 = this.new0.value
         const new1 = this.new1.value

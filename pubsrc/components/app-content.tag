@@ -11,9 +11,19 @@ const XHR = require('superagent')
 
 <app-content>
   <style scoped>
-    main         { margin-top: 8px     }
-    h4, h5       { color:      #ef5350 }
-    .div__fogged { opacity:    0.2     }
+    main          { margin-top: 8px     }
+    h4, h5        { color:      #ef5350 }
+    .div__fogged  { opacity:    0.2     }
+
+    .tmp__mounted {
+      width:  100%;
+      height: 100%;
+    }
+
+    .tmp__unmounted {
+      width:  0%;
+      height: 0%;
+    }
   </style>
 
   <div class={ tmp == null? "div__clear": "div__fogged" }>
@@ -44,7 +54,7 @@ const XHR = require('superagent')
     <app-footer />
   </div>
 
-  <tmp></tmp>
+  <tmp class={ tmp == null? 'tmp__unmounted': 'tmp__mounted' }></tmp>
 
   <script>
     this.access_token = null
@@ -54,6 +64,14 @@ const XHR = require('superagent')
         this.tmp = riot.mount('tmp', 'login-form', { login: this.login })
         this.update()
     })
+
+    unmount_tmp() {
+        this.tmp[0].unmount(true)
+        this.tmp = null
+        this.update()
+        $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
+        riot.route('/')
+    }
 
     login(account, password) {
         XHR.post('/v1/oauth2/token').type('form').send({
@@ -68,12 +86,9 @@ const XHR = require('superagent')
             } else if (err) {
                 alert('サーバとの通信に失敗しました。');
             } else if (res.ok) {
-                this.tmp[0].unmount(true)
-                this.tmp          = null
                 this.access_token = res.body.access_token
                 this.user         = res.body.user
-                this.update()
-                $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
+                this.unmount_tmp()
             } else if (res) {
                 alert(`原因不明のエラーが発生しました: ${res.status}`)
             } else {
@@ -84,7 +99,7 @@ const XHR = require('superagent')
 
     change_password(old_password, new_password) {
         XHR.put('/v1/users/' + this.user.account + '/password').set({
-            Authorization: `Bearer: ${this.access_token}`
+            Authorization: `Bearer ${this.access_token}`
         }).send({
             old_password: old_password,
             new_password: new_password
@@ -103,11 +118,7 @@ const XHR = require('superagent')
                 alert('原因不明のエラーが発生しました。')
             }
 
-            this.tmp[0].unmount(true)
-            this.tmp = null
-            this.update()
-            $('ul.tabs').tabs() // Materialize の jquery 用コード。うざい。
-            riot.route('/')
+            this.unmount_tmp()
         })
     }
 
@@ -128,7 +139,9 @@ const XHR = require('superagent')
 
     riot.route('change-password', () => {
         this.tmp = riot.mount('tmp', 'change-password', {
-            change_password: this.change_password
+            cancel:          this.unmount_tmp,
+            change_password: this.change_password,
+            user:            this.user
         })
 
         riot.route('/')
