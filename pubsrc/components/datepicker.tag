@@ -4,7 +4,7 @@
   <input class="datepicker"
          id={ id }
          onchange={ set_date }
-         type="date"
+         type="text"
          value={ opts.value } />
 
   <script>
