@@ -16,7 +16,7 @@ function build_index(is_debug) {
             .pipe(gulp.dest('./public/js/') );
 }
 
-gulp.task('build-index', () => build_index(true)  );
+gulp.task('build-index', () => build_index(true) );
 gulp.task('build',       ['build-index']);
 
 gulp.task('build-dist-index', () => build_index(false) );
