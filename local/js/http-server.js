@@ -7,6 +7,10 @@ const fs          = require('fs');
 const bodyParser  = require('body-parser');
 const log4js      = require('log4js');
 
+
+/*
+ * ログ
+ */
 log4js.configure({
     appenders: [
         {
@@ -27,6 +31,10 @@ log4js.configure({
     ]
 });
 
+
+/*
+ * express を利用する際のお約束
+ */
 const app = express();
 
 app.use(session({
@@ -56,11 +64,15 @@ const handlers = {
 }
 
 function route(name) {
-    return function(req, res) {
+    return (req, res) => {
         handlers[req.params.ver][name](req, res);
     }
 }
 
+
+/*
+ * ルーティング
+ */
 app.post('/:ver/oauth2/token', route('oauth2') );
 app.post('/:ver/reports',      route('register') );
 
@@ -72,6 +84,10 @@ app.delete('/:ver/reports/:id', route('delete') );
 
 app.all('*', (req, res) => { res.sendStatus(403) });
 
+
+/*
+ * HTTPS
+ */
 https.createServer({
     key:  fs.readFileSync('local/certs/key.pem'),
     cert: fs.readFileSync('local/certs/cert.pem')

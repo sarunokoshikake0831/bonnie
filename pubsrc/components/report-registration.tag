@@ -71,9 +71,6 @@ const observable_report = require('./observable-report')
         Materialize.updateTextFields()
         $('select').material_select('destroy')
         $('select').material_select()
-        /*
-         * ここまで
-         */
     }
   </script>
 </report-registration>

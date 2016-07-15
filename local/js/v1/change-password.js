@@ -18,7 +18,7 @@ module.exports = (req, res) => {
         return;
     }
 
-    util.query( (db) => {
+    util.query(db => {
         const account      = req.params.account;
         const old_password = req.body.old_password;
         const new_password = req.body.new_password;

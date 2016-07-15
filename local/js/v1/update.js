@@ -16,13 +16,13 @@ module.exports = (req, res) => {
         return;
     }
 
-    util.query( (db) => {
+    util.query(db => {
         const report_id = req.params.id;
         const msg_pfx   = '[v1/update]'
 
         let data = { version: req.body.version + 1 };
 
-        Object.keys(req.body).forEach( key => {
+        Object.keys(req.body).forEach(key => {
             if (key != 'version') {
                 data[key] = req.body[key]
             }

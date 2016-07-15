@@ -310,11 +310,11 @@ const constants = require('./constants.json')
             keyword: ''
         }
     
-        constants.event0.forEach( (e) => {
+        constants.event0.forEach(e => {
             this.search_condition.event0[e.id] = false
         })
     
-        constants.event1.forEach( (e) => {
+        constants.event1.forEach(e => {
             this.search_condition.event1[e.id] = false
         })
 

@@ -10,7 +10,7 @@
   <script>
     this.id = 'datepicker-' + Math.random().toString(36).slice(-8)
 
-    this.on('mount', function() {
+    this.on('mount', () => {
         $('#' + this.id).pickadate({
             format:           'yyyy/mm/dd',
             labelMonthNext:   '翌月',

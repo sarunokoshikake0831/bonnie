@@ -1,6 +1,6 @@
 {
   "name": "bonnie",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "re-implementation of CaseFile system with Riot, Material Design (Materialize), MongoDB and REST API",
   "main": "index.js",
   "repository": {

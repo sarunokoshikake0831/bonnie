@@ -16,7 +16,7 @@ module.exports = (req, res) => {
         return;
     }
 
-    util.query( (db) => {
+    util.query(db => {
         const report_id = req.params.id;
         const msg_pfx   = '[v1/delete]'
 
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
                 _id:     new ObjectID(report_id),
                 version: parseInt(req.query.version)
             }
-        ).then( result => {
+        ).then(result => {
             db.close();
 
             if (result.value == null) {
@@ -46,7 +46,7 @@ module.exports = (req, res) => {
                 res.sendStatus(200);
                 log_info.info(`${msg_pfx} report deleted: ${report_id}`);
             }
-        }).catch( err => {
+        }).catch(err => {
             db.close();
 
             res.sendStatus(500);

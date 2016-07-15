@@ -40,7 +40,7 @@ module.exports = (req, res) => {
     const account  = req.body.account;
     const password = req.body.password;
 
-    util.query( (db) => {
+    util.query(db => {
         db.collection('users').find({
             is_alive: true,
             account:  account

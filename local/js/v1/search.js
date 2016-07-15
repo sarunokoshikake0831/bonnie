@@ -32,6 +32,7 @@ function generate_common_condition(req) {
         condition.push({ number: new RegExp(req.query.number) });
     }
 
+
     /*
      * 発生日
      */
