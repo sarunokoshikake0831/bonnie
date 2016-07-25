@@ -1,8 +1,6 @@
 'use strict';
 
 const mongodb  = require('mongodb').MongoClient;
-const ObjectID = require('mongodb').ObjectID;
-const moment   = require('moment');
 const log4js   = require('log4js');
 
 const log_info = log4js.getLogger('info');
